@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace="hm.hmp001_d003">
+	<resultMap type="hmp001_d003Result01" id="Hmp001_d003VO">
+		<result property="id" column="PROD_ID"/>
+		<result property="name" column="PROD_NAME"/>
+		<result property="price" column="PROD_PRICE"/>
+		<result property="desc" column="PROD_DESC"/>
+		<result property="vend_name" column="VEND_NAME"/>
+	</resultMap>
+	
+	<select id="searchList" resultMap="hmp001_d003Result01" parameterType="java.util.Map">
+		<![CDATA[
+			SELECT PROD_ID, PROD_NAME, PROD_PRICE, PROD_DESC, VEND_NAME
+			FROM PRODUCT A, VENDORS B
+		]]>
+		
+		<where>
+			<if test=" p_id != ''  and  p_id != null">
+				B.VEND_ID = A.VEND_ID
+			</if>
+		</where>
+		GROUP BY PROD_ID, PROD_NAME, PROD_PRICE, PROD_DESC, VEND_NAME
+	</select>
+</mapper>
